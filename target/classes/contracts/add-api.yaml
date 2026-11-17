@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: Addition Microservice API
+  description: Contract for adding two integer values using query parameters.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /ms/add:
+    get:
+      summary: Add two numbers
+      operationId: addNumbers
+      description: Accepts two integer query parameters and returns their sum.
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: First integer value
+          schema:
+            type: integer
+            format: int32
+            example: 10
+        - name: num2
+          in: query
+          required: true
+          description: Second integer value
+          schema:
+            type: integer
+            format: int32
+            example: 20
+      responses:
+        '200':
+          description: Addition completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddResponse'
+              example:
+                num1: 10
+                num2: 20
+                result: 30
+        '400':
+          description: Missing or invalid query parameter
+
+components:
+  schemas:
+    AddResponse:
+      type: object
+      required:
+        - num1
+        - num2
+        - result
+      properties:
+        num1:
+          type: integer
+          format: int32
+          example: 10
+        num2:
+          type: integer
+          format: int32
+          example: 20
+        result:
+          type: integer
+          format: int32
+          example: 30
